@@ -23,6 +23,13 @@ python run_pipeline.py          # ~10 min: dataset, models, calibration, SHAP, d
 streamlit run app/dashboard.py  # dashboard on http://localhost:8501
 ```
 
+Single steps can be run on their own, e.g. only the exploratory analysis (~20 s, prints the results and
+writes figures to `reports/eda/`):
+
+```bash
+python -m src.eda
+```
+
 The dashboard can also be started directly (results are included in the repository) without running
 the pipeline first.
 

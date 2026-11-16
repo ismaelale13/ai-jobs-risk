@@ -176,11 +176,70 @@ def run():
         "decline_share_by_area_size": size["mean"].round(3).to_dict(),
     }
     (OUT / "eda_summary.json").write_text(json.dumps(summary, indent=2, ensure_ascii=False))
+
+    report = text_report(df, groups, ai, prior, size, corr, desc)
+    (OUT / "eda_report.txt").write_text(report)
+    print(report)
     return summary
 
 
+def text_report(df, groups, ai, prior, size, corr, desc):
+    """Readable EDA results (printed when the script runs, saved as reports/eda/eda_report.txt)."""
+    pct = lambda v: f"{v:6.1%}"
+    L = []
+    L.append("=" * 72)
+    L.append("EXPLORATORY DATA ANALYSIS")
+    L.append("=" * 72)
+    L.append(f"Rows (occupation x area cells): {len(df):,}")
+    L.append(f"Occupations: {df['OCC_CODE'].nunique()}   Areas: {df['AREA'].nunique()} "
+             f"({(df['nonmetro'] == 1).mean():.0%} of cells in nonmetro areas)")
+
+    L.append("\n1) TARGET: employment change May 2022 -> May 2025")
+    q = df["pct_change"].quantile([0.1, 0.25, 0.5, 0.75, 0.9])
+    L.append("   Percentiles of change: " + "  ".join(f"p{int(k * 100)}={v:+.1%}" for k, v in q.items()))
+    L.append(f"   Cells with decline > 5 % (target = 1): {df[C.TARGET].mean():.1%}  -> classes reasonably balanced")
+    L.append(f"   Cells with exactly 0 % change: {(df['pct_change'] == 0).mean():.1%}")
+    L.append(f"   Total employment in sample: {df['emp_2022'].sum():,.0f} -> {df['emp_2025'].sum():,.0f} "
+             f"({df['emp_2025'].sum() / df['emp_2022'].sum() - 1:+.1%})")
+
+    L.append("\n2) DECLINE SHARE BY OCCUPATION GROUP (highest / lowest 5)")
+    g = groups.sort_values("mean", ascending=False)
+    for _, r in pd.concat([g.head(5), g.tail(5)]).iterrows():
+        L.append(f"   {r['label']:<30s} {pct(r['mean'])}   ({int(r['size']):>6,} cells)")
+
+    L.append("\n3) AI EXPOSURE (GPT-4 beta) QUINTILES OF OCCUPATIONS")
+    L.append(f"   {'Quintile':<12s}{'mean score':>11s}{'occupations':>13s}{'emp. growth':>13s}{'cells declining':>17s}")
+    for idx, r in ai.iterrows():
+        L.append(f"   {str(idx).replace(chr(10), ' '):<12s}{r['ai']:>11.2f}{int(r['n']):>13d}"
+                 f"{r['growth'] / 100:>+13.1%}{r['decline']:>17.1%}")
+    L.append("   -> only the most exposed quintile shrank; the relation is not linear")
+
+    L.append("\n4) PRIOR TREND 2019 -> 2022 (deciles of local change)")
+    for _, r in prior.iterrows():
+        L.append(f"   prior change {r['x'] / 100:+7.1%}   -> declining afterwards {r['y']:.1%}")
+    L.append(f"   Cells with a 2019 value: {df['has_2019'].mean():.1%}")
+
+    L.append("\n5) DECLINE SHARE BY AREA SIZE")
+    for k, r in size.iterrows():
+        L.append(f"   {k:<14s} {pct(r['mean'])}   ({int(r['size']):>6,} cells)")
+
+    L.append("\n6) SPEARMAN CORRELATION WITH LOG EMPLOYMENT CHANGE (target, continuous)")
+    for k, v in corr.items():
+        L.append(f"   {k:<26s} {v:+.3f}")
+    ai_comp = df[["ai_gpt4_beta", "wa_computers"]].corr(method="spearman").iloc[0, 1]
+    L.append(f"   Note: AI exposure vs. 'working with computers' = {ai_comp:+.2f} (strong overlap)")
+
+    L.append("\n7) MISSING VALUES")
+    miss = desc["missing_share"][desc["missing_share"] > 0]
+    for k, v in miss.items():
+        L.append(f"   {k:<26s} {v:.1%} missing (handled: imputation / native NaN support)")
+    if miss.empty:
+        L.append("   none")
+    L.append(f"   Occupations with imputed AI score: {df.drop_duplicates('OCC_CODE')['ai_imputed'].sum()}")
+    L.append("\nFigures: reports/eda/*.png   Tables: descriptive_statistics.csv, eda_summary.json")
+    L.append("=" * 72)
+    return "\n".join(L)
+
+
 if __name__ == "__main__":
-    s = run()
-    print(json.dumps({k: s[k] for k in ["rows", "decline_share", "median_pct_change"]}, indent=2))
-    print(json.dumps(s["ai_quintiles"], indent=1))
-    print(s["spearman_with_log_change"])
+    run()

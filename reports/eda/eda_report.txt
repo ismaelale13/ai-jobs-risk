@@ -1,0 +1,76 @@
+========================================================================
+EXPLORATORY DATA ANALYSIS
+========================================================================
+Rows (occupation x area cells): 78,413
+Occupations: 768   Areas: 405 (25% of cells in nonmetro areas)
+
+1) TARGET: employment change May 2022 -> May 2025
+   Percentiles of change: p10=-32.8%  p25=-14.5%  p50=+2.5%  p75=+21.7%  p90=+46.8%
+   Cells with decline > 5 % (target = 1): 38.2%  -> classes reasonably balanced
+   Cells with exactly 0 % change: 5.2%
+   Total employment in sample: 83,501,340 -> 86,927,550 (+4.1%)
+
+2) DECLINE SHARE BY OCCUPATION GROUP (highest / lowest 5)
+   Farming & forestry              57.4%   (   326 cells)
+   Office & admin support          52.4%   ( 8,716 cells)
+   Production                      49.5%   ( 7,045 cells)
+   Arts, design & media            48.3%   ( 1,546 cells)
+   Architecture & engineering      45.3%   ( 2,072 cells)
+   Protective service              30.7%   ( 2,263 cells)
+   Food preparation                30.1%   ( 4,471 cells)
+   Building & grounds              29.0%   ( 1,721 cells)
+   Healthcare support              26.2%   ( 2,485 cells)
+   Management                      23.8%   ( 5,253 cells)
+
+3) AI EXPOSURE (GPT-4 beta) QUINTILES OF OCCUPATIONS
+   Quintile     mean score  occupations  emp. growth  cells declining
+   Q1 lowest          0.04          154        +4.9%            39.9%
+   Q2                 0.17          154        +5.6%            35.8%
+   Q3                 0.34          153        +6.0%            35.2%
+   Q4                 0.47          153        +5.3%            35.0%
+   Q5 highest         0.64          154        -0.2%            44.1%
+   -> only the most exposed quintile shrank; the relation is not linear
+
+4) PRIOR TREND 2019 -> 2022 (deciles of local change)
+   prior change  -42.4%   -> declining afterwards 29.2%
+   prior change  -26.2%   -> declining afterwards 31.7%
+   prior change  -16.3%   -> declining afterwards 31.9%
+   prior change   -8.6%   -> declining afterwards 33.1%
+   prior change   +0.0%   -> declining afterwards 33.7%
+   prior change   +6.7%   -> declining afterwards 36.3%
+   prior change  +15.8%   -> declining afterwards 38.0%
+   prior change  +27.8%   -> declining afterwards 40.3%
+   prior change  +48.8%   -> declining afterwards 45.3%
+   prior change +100.0%   -> declining afterwards 55.5%
+   Cells with a 2019 value: 87.6%
+
+5) DECLINE SHARE BY AREA SIZE
+   Nonmetro        40.7%   (19,368 cells)
+   Small metro     37.7%   (19,696 cells)
+   Medium metro    36.9%   (19,734 cells)
+   Large metro     37.5%   (19,615 cells)
+
+6) SPEARMAN CORRELATION WITH LOG EMPLOYMENT CHANGE (target, continuous)
+   loc_quotient_2022          -0.240
+   log_change_2019_2022       -0.177
+   log_emp_2022               -0.033
+   ai_gpt4_beta               -0.029
+   emp_rse_2022               -0.014
+   wa_computers               -0.004
+   wa_physical                -0.002
+   ai_human_beta              +0.004
+   wa_administrative          +0.026
+   log_median_wage_2022       +0.059
+   job_zone                   +0.074
+   nat_log_change_2019_2022   +0.097
+   wa_creative                +0.101
+   Note: AI exposure vs. 'working with computers' = +0.80 (strong overlap)
+
+7) MISSING VALUES
+   log_median_wage_2022       0.4% missing (handled: imputation / native NaN support)
+   log_change_2019_2022       12.4% missing (handled: imputation / native NaN support)
+   nat_log_change_2019_2022   6.3% missing (handled: imputation / native NaN support)
+   Occupations with imputed AI score: 56
+
+Figures: reports/eda/*.png   Tables: descriptive_statistics.csv, eda_summary.json
+========================================================================
