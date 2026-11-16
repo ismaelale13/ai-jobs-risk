@@ -1,0 +1,84 @@
+{
+  "rows": 78413,
+  "occupations": 768,
+  "areas": 405,
+  "decline_share": 0.382,
+  "median_pct_change": 0.025,
+  "decline_share_by_group": {
+    "Management": 0.238,
+    "Healthcare support": 0.262,
+    "Building & grounds": 0.29,
+    "Food preparation": 0.301,
+    "Protective service": 0.307,
+    "Business & financial": 0.32,
+    "Community & social service": 0.325,
+    "Personal care": 0.338,
+    "Healthcare practitioners": 0.354,
+    "Construction": 0.358,
+    "Installation & repair": 0.361,
+    "Sales": 0.369,
+    "Life & social science": 0.378,
+    "Legal": 0.382,
+    "Education": 0.386,
+    "Transportation": 0.421,
+    "Computer & math": 0.44,
+    "Architecture & engineering": 0.453,
+    "Arts, design & media": 0.483,
+    "Production": 0.495,
+    "Office & admin support": 0.524,
+    "Farming & forestry": 0.574
+  },
+  "ai_quintiles": [
+    {
+      "bin": "Q1\nlowest",
+      "ai": "0.043",
+      "growth": "4.869",
+      "decline": "0.399"
+    },
+    {
+      "bin": "Q2",
+      "ai": "0.173",
+      "growth": "5.559",
+      "decline": "0.358"
+    },
+    {
+      "bin": "Q3",
+      "ai": "0.34",
+      "growth": "5.99",
+      "decline": "0.352"
+    },
+    {
+      "bin": "Q4",
+      "ai": "0.468",
+      "growth": "5.275",
+      "decline": "0.35"
+    },
+    {
+      "bin": "Q5\nhighest",
+      "ai": "0.64",
+      "growth": "-0.191",
+      "decline": "0.441"
+    }
+  ],
+  "spearman_with_log_change": {
+    "loc_quotient_2022": -0.24,
+    "log_change_2019_2022": -0.177,
+    "log_emp_2022": -0.033,
+    "ai_gpt4_beta": -0.029,
+    "emp_rse_2022": -0.014,
+    "wa_computers": -0.004,
+    "wa_physical": -0.002,
+    "ai_human_beta": 0.004,
+    "wa_administrative": 0.026,
+    "log_median_wage_2022": 0.059,
+    "job_zone": 0.074,
+    "nat_log_change_2019_2022": 0.097,
+    "wa_creative": 0.101
+  },
+  "decline_share_by_area_size": {
+    "Nonmetro": 0.407,
+    "Small metro": 0.377,
+    "Medium metro": 0.369,
+    "Large metro": 0.375
+  }
+}

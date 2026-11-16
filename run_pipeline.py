@@ -5,7 +5,7 @@ Usage:  python run_pipeline.py
 import json
 import time
 
-from src import build_dataset, calibrate, dashboard_data, explain, train
+from src import build_dataset, calibrate, dashboard_data, eda, explain, train
 from src import config as C
 
 
@@ -16,6 +16,8 @@ def main():
     print("   ", stats)
     (C.REPORTS).mkdir(exist_ok=True)
     (C.REPORTS / "dataset_stats.json").write_text(json.dumps(stats, indent=2, default=str))
+    eda.run()
+    print("    EDA figures in reports/eda/")
 
     print("2/4 Training and evaluating models (grouped CV, this takes a few minutes) ...")
     train.run()

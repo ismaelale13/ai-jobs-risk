@@ -45,6 +45,7 @@ downloads (`oesm19all.zip`, `oesm22all.zip`, `oesm25all.zip`, `db_30_3_excel.zip
 |---|---|---|
 | 1 | `src/load.py` | Reads the raw ZIPs, or the cached extracts in `data/interim/` |
 | 2 | `src/build_dataset.py` | Merges OEWS 2022/2025 on area + SOC code; keeps metro areas with unchanged definitions, cells with ≥ 100 employees and a reliable 2022 estimate (relative standard error ≤ 20 %); adds 2019→2022 local and national trends, O\*NET features and AI exposure; builds the target |
+| 2b | `src/eda.py` | Exploratory analysis: 6 figures, descriptive statistics and summary → `reports/eda/` |
 | 3 | `src/train.py` | Hold-out test set of 20 % of occupations; GroupKFold tuning; logistic regression vs. LightGBM, each without and with AI features; bootstrap CIs; error analysis |
 | 4 | `src/calibrate.py` | Platt scaling on training out-of-fold predictions; decision threshold; reliability diagram |
 | 5 | `src/explain.py` | SHAP values, global importance and plots |
