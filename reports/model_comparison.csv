@@ -1,0 +1,5 @@
+model,features,cv_roc_auc,roc_auc,pr_auc,f1,accuracy
+logreg,without_ai,0.6291,0.595,0.4802,0.5455,0.5501
+logreg,with_ai,0.6274,0.5961,0.4816,0.5444,0.5517
+lightgbm,without_ai,0.6676,0.6451,0.5352,0.5816,0.5642
+lightgbm,with_ai,0.6653,0.6475,0.535,0.5811,0.5658
