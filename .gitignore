@@ -1,5 +1,7 @@
+# raw downloads are large; the pipeline runs from the cached extracts in data/interim/
 data/raw/
-data/interim/
 __pycache__/
 *.pyc
 .venv/
+data/processed/shap_values.parquet
+data/processed/scored.parquet

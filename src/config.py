@@ -8,6 +8,7 @@ PROCESSED = ROOT / "data" / "processed"
 REPORTS = ROOT / "reports"
 
 # Raw files (downloaded by hand, see README)
+OEWS_2019_ZIP = RAW / "oesm19all.zip"
 OEWS_2022_ZIP = RAW / "oesm22all.zip"
 OEWS_2025_ZIP = RAW / "oesm25all.zip"
 ONET_ZIP = RAW / "db_30_3_excel.zip"
@@ -15,6 +16,7 @@ ELOUNDOU_ZIP = RAW / "GPTs-are-GPTs-main.zip"
 
 # Sample definition
 MIN_EMP_2022 = 100          # drop tiny occupation-metro cells (noisy % changes)
+MAX_RSE_2022 = 20.0         # drop cells whose 2022 estimate is unreliable (relative std. error > 20 %)
 DECLINE_THRESHOLD = -0.05   # target = 1 if employment fell by more than 5 %
 AREA_TYPES = {"4", "6"}     # 4 = metropolitan area, 6 = nonmetropolitan area
 
@@ -38,6 +40,8 @@ WORK_ACTIVITIES = {
 BASE_NUMERIC = [
     "log_emp_2022", "log_median_wage_2022", "loc_quotient_2022", "jobs_per_1000_2022",
     "emp_rse_2022", "log_area_emp_2022", "nonmetro", "job_zone",
+    # pre-period trends (both known in May 2022)
+    "log_change_2019_2022", "has_2019", "nat_log_change_2019_2022",
 ] + list(WORK_ACTIVITIES.values())
 CATEGORICAL = ["major_group"]
 AI_FEATURES = ["ai_gpt4_alpha", "ai_gpt4_beta", "ai_gpt4_gamma", "ai_human_beta", "ai_imputed"]

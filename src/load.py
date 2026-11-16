@@ -24,19 +24,21 @@ def _cached(name, builder):
 
 
 def load_oews(year):
-    """OEWS all-data file, reduced to metro/nonmetro rows (detailed occupations + area totals)."""
-    zip_path = C.OEWS_2022_ZIP if year == 2022 else C.OEWS_2025_ZIP
+    """OEWS all-data file, reduced to national (cross-industry) and metro/nonmetro rows
+    (detailed occupations + area totals)."""
+    zip_path = {2019: C.OEWS_2019_ZIP, 2022: C.OEWS_2022_ZIP, 2025: C.OEWS_2025_ZIP}[year]
 
     def build():
         df = _read_excel_from_zip(zip_path, f"all_data_M_{year}.xlsx", dtype=str)
         df.columns = [c.upper() for c in df.columns]
-        df = df[df["AREA_TYPE"].isin(C.AREA_TYPES)]
+        df = df.rename(columns={"JOBS_1000_ORIG": "JOBS_1000"})
+        df = df[df["AREA_TYPE"].isin(C.AREA_TYPES | {"1"}) & (df["I_GROUP"] == "cross-industry")]
         df = df[df["O_GROUP"].isin(["detailed", "total"])]
         cols = ["AREA", "AREA_TITLE", "AREA_TYPE", "PRIM_STATE", "OCC_CODE", "OCC_TITLE", "O_GROUP",
                 "TOT_EMP", "EMP_PRSE", "JOBS_1000", "LOC_QUOTIENT", "A_MEDIAN"]
-        return df[cols].reset_index(drop=True)
+        return df[[c for c in cols if c in df.columns]].reset_index(drop=True)
 
-    return _cached(f"oews_{year}", build)
+    return _cached(f"oews_v2_{year}", build)
 
 
 def load_onet():
