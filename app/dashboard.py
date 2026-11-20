@@ -71,9 +71,10 @@ def risk_band(p):
 
 
 st.title("Which Jobs Are at Risk?")
-st.caption("Predicted risk that employment in an occupation and U.S. metro area fell by more than 5% "
-           "between May 2022 and May 2025 (after the release of ChatGPT). Data: BLS OEWS, O*NET 30.3, "
-           "Eloundou et al. (2024).")
+st.caption("An early-warning model for local employment decline: predicted risk that employment in an "
+           "occupation and U.S. metro area falls by more than 5% from May 2022 to May 2025, using only "
+           "information available in 2022. The model also tests whether AI exposure scores improve the "
+           "prediction. Data: BLS OEWS, O*NET 30.3, Eloundou et al. (2024).")
 
 tab_pair, tab_map, tab_rank, tab_model = st.tabs(["Occupation × metro", "Map", "Rankings", "Model"])
 

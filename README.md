@@ -1,10 +1,11 @@
-# Which Jobs Are at Risk? Predicting Local Labor Market Decline with AI Exposure Data
+# Which Jobs Are at Risk? An Early-Warning Model for Local Employment Decline in the U.S.
 
 Practical Data Science, WS 2026/27 – Group 5
 
-Predicts whether employment in a U.S. occupation × metro area fell by more than 5 % between
-May 2022 and May 2025 (after the release of ChatGPT), and tests whether AI exposure scores
-improve the prediction beyond classic labor-market features.
+An early-warning model that uses only information available in May 2022 to predict whether employment
+in a U.S. occupation × metro area falls by more than 5 % by May 2025. Since ChatGPT appeared in late
+2022, AI exposure scores are often used to judge which jobs are at risk, so the project also tests
+whether these scores improve the prediction beyond classic labor-market features.
 
 **Live dashboard (no installation needed):** https://ai-jobs-risk-jqxycr4vdbhrus6brfaqxh.streamlit.app/
 
