@@ -215,5 +215,28 @@ with tab_model:
                  f"accuracy {cal['test_accuracy_at_threshold']:.0%}, F1 {cal['test_f1_at_threshold']:.3f}.")
         if (REPORTS / "calibration.png").exists():
             st.image(str(REPORTS / "calibration.png"), width=420)
+    rob_dir = REPORTS / "robustness"
+    if (rob_dir / "placebo.csv").exists():
+        st.subheader("Validation: placebo, robustness, out-of-time")
+        plac = pd.read_csv(rob_dir / "placebo.csv")
+        st.markdown("**Placebo test.** Does AI exposure improve the prediction before ChatGPT as well?")
+        st.dataframe(plac[["period", "auc_without_ai", "auc_with_ai", "gain", "ci_low", "ci_high"]]
+                     .style.format({c: "{:+.3f}" if c in ("gain", "ci_low", "ci_high") else "{:.3f}"
+                                    for c in ["auc_without_ai", "auc_with_ai", "gain", "ci_low", "ci_high"]}),
+                     hide_index=True, width="stretch")
+        st.markdown("**Robustness checks** (2022→2025, AUC gain from adding AI features).")
+        rob = pd.read_csv(rob_dir / "robustness_checks.csv")
+        st.dataframe(rob[["check", "auc_without_ai", "auc_with_ai", "gain", "ci_low", "ci_high"]]
+                     .style.format({c: "{:+.3f}" if c in ("gain", "ci_low", "ci_high") else "{:.3f}"
+                                    for c in ["auc_without_ai", "auc_with_ai", "gain", "ci_low", "ci_high"]}),
+                     hide_index=True, width="stretch")
+        st.markdown("**Out-of-time test.** Trained only on 2019→2022, evaluated on 2022→2025.")
+        oot = pd.read_csv(rob_dir / "out_of_time.csv")
+        st.dataframe(oot[["model", "auc_in_period_cv", "auc_out_of_time", "auc_out_of_time_test_occupations"]]
+                     .style.format({c: "{:.3f}" for c in ["auc_in_period_cv", "auc_out_of_time",
+                                                          "auc_out_of_time_test_occupations"]}),
+                     hide_index=True, width="stretch")
+        if (rob_dir / "robustness_summary.png").exists():
+            st.image(str(rob_dir / "robustness_summary.png"))
     st.caption(f"Test set: {metrics['n_test_occupations']} occupations never seen in training "
                f"({metrics['n_test_rows']:,} occupation × metro rows).")

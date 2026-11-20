@@ -1,0 +1,32 @@
+========================================================================
+VALIDATION: PLACEBO, ROBUSTNESS, OUT-OF-TIME
+========================================================================
+
+1) PLACEBO - does AI exposure help predict decline before ChatGPT as well?
+   2019 -> 2022 (before ChatGPT)    AUC without AI 0.718 | with AI 0.720 | gain +0.002 [-0.002, +0.006]
+   2022 -> 2025 (after ChatGPT)     AUC without AI 0.686 | with AI 0.686 | gain +0.000 [-0.004, +0.004]
+   Decline share and employment growth by AI exposure quintile:
+               2019-2022 decline_share  2019-2022 growth  2022-2025 decline_share  2022-2025 growth
+   q                                                                                               
+   Q1 lowest                     0.531            -0.072                    0.399             0.049
+   Q2                            0.492            -0.018                    0.358             0.056
+   Q3                            0.415            -0.019                    0.352             0.060
+   Q4                            0.356             0.090                    0.350             0.053
+   Q5 highest                    0.487            -0.056                    0.441            -0.002
+
+2) ROBUSTNESS (2022 -> 2025) - AUC gain from AI features under other choices
+   decline threshold +0%                AUC 0.683 -> 0.682  gain -0.001 [-0.004, +0.002]
+   decline threshold -5%                AUC 0.686 -> 0.686  gain +0.000 [-0.004, +0.004]
+   decline threshold -10%               AUC 0.699 -> 0.699  gain +0.000 [-0.003, +0.004]
+   only GPT-4 exposure (beta)           AUC 0.686 -> 0.686  gain -0.000 [-0.002, +0.003]
+   only human-rated exposure (beta)     AUC 0.686 -> 0.685  gain -0.001 [-0.004, +0.001]
+   employment-weighted AUC              AUC 0.699 -> 0.697  gain -0.001 [-0.010, +0.006]
+   without O*NET task features          AUC 0.685 -> 0.682  gain -0.003 [-0.008, +0.003]
+
+3) OUT-OF-TIME - train on 2019 -> 2022, predict 2022 -> 2025
+   logistic regression    out-of-time AUC 0.606 (unseen test occupations 0.579) vs. same-period CV 0.649; mean predicted 50% vs actual 38%
+   LightGBM without AI    out-of-time AUC 0.640 (unseen test occupations 0.614) vs. same-period CV 0.686; mean predicted 49% vs actual 38%
+   LightGBM with AI       out-of-time AUC 0.642 (unseen test occupations 0.616) vs. same-period CV 0.686; mean predicted 48% vs actual 38%
+
+Files: reports/robustness/*.csv, robustness_summary.png
+========================================================================

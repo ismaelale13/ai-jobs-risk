@@ -19,7 +19,8 @@ python -m venv .venv
 # Windows: .venv\Scripts\activate     macOS/Linux: source .venv/bin/activate
 pip install -r requirements.txt
 
-python run_pipeline.py          # ~10 min: dataset, models, calibration, SHAP, dashboard data
+python run_pipeline.py          # ~18 min: dataset, EDA, models, calibration, SHAP, dashboard data, validation
+# python run_pipeline.py --skip-robustness   # ~10 min, without step 7
 streamlit run app/dashboard.py  # dashboard on http://localhost:8501
 ```
 
@@ -37,13 +38,13 @@ the pipeline first.
 
 | Source | Content | License |
 |---|---|---|
-| BLS OEWS, May 2019, 2022, 2025 ("All data"), https://www.bls.gov/oes/tables.htm | Employment and wages by occupation and area | Public domain |
+| BLS OEWS, May 2016, 2019, 2022, 2025 ("All data"), https://www.bls.gov/oes/tables.htm | Employment and wages by occupation and area | Public domain |
 | O\*NET 30.3 Database, https://www.onetcenter.org/database.html | Job zones, work activities | CC BY 4.0 |
 | Eloundou et al. (2024), *GPTs are GPTs*, https://github.com/openai/GPTs-are-GPTs | LLM exposure scores per occupation | MIT |
 | GeoNames (via `geonamescache`) | Coordinates of principal cities for the map | CC BY 4.0 |
 
 `data/interim/` holds reduced extracts of these files. To rebuild them from scratch, put the original
-downloads (`oesm19all.zip`, `oesm22all.zip`, `oesm25all.zip`, `db_30_3_excel.zip`,
+downloads (`oesm16all.zip`, `oesm19all.zip`, `oesm22all.zip`, `oesm25all.zip`, `db_30_3_excel.zip`,
 `GPTs-are-GPTs-main.zip`) into `data/raw/` and delete `data/interim/`.
 
 ## Pipeline
@@ -57,6 +58,7 @@ downloads (`oesm19all.zip`, `oesm22all.zip`, `oesm25all.zip`, `db_30_3_excel.zip
 | 4 | `src/calibrate.py` | Platt scaling on training out-of-fold predictions; decision threshold; reliability diagram |
 | 5 | `src/explain.py` | SHAP values, global importance and plots |
 | 6 | `src/dashboard_data.py`, `src/geo.py` | Compact table and metro coordinates for the dashboard |
+| 7 | `src/periods.py`, `src/robustness.py` | Placebo test (AI exposure before vs. after ChatGPT, 2019→2022 vs. 2022→2025), robustness checks (decline thresholds, single AI measures, employment weighting, without O\*NET), out-of-time test (train 2019→2022, predict 2022→2025) → `reports/robustness/` |
 | – | `app/dashboard.py` | Streamlit app |
 
 Missing occupation scores (mostly "All Other" and aggregated OEWS codes) are imputed with the mean of

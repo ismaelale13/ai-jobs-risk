@@ -8,6 +8,7 @@ PROCESSED = ROOT / "data" / "processed"
 REPORTS = ROOT / "reports"
 
 # Raw files (downloaded by hand, see README)
+OEWS_2016_ZIP = RAW / "oesm16all.zip"
 OEWS_2019_ZIP = RAW / "oesm19all.zip"
 OEWS_2022_ZIP = RAW / "oesm22all.zip"
 OEWS_2025_ZIP = RAW / "oesm25all.zip"

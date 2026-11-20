@@ -1,0 +1,4 @@
+model,auc_out_of_time,auc_in_period_cv,auc_out_of_time_test_occupations,mean_predicted,actual_share
+logistic regression,0.6062,0.649,0.5793,0.4965,0.3819
+LightGBM without AI,0.6396,0.686,0.6141,0.4874,0.3819
+LightGBM with AI,0.6419,0.6861,0.6159,0.483,0.3819

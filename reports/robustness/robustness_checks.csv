@@ -1,0 +1,8 @@
+check,positive_share,auc_without_ai,auc_with_ai,gain,ci_low,ci_high
+decline threshold +0%,0.431,0.6829,0.6816,-0.0013,-0.004,0.0019
+decline threshold -5%,0.3819,0.686,0.6861,0.0001,-0.0037,0.0037
+decline threshold -10%,0.3001,0.6985,0.6986,0.0001,-0.0032,0.0043
+only GPT-4 exposure (beta),0.3819,0.686,0.6859,-0.0001,-0.0024,0.0026
+only human-rated exposure (beta),0.3819,0.686,0.6845,-0.0015,-0.0037,0.0008
+employment-weighted AUC,0.3819,0.6988,0.6974,-0.0014,-0.0096,0.0061
+without O*NET task features,0.3819,0.6851,0.6822,-0.0029,-0.0079,0.0026

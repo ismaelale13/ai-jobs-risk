@@ -1,0 +1,115 @@
+{
+  "placebo": [
+    {
+      "period": "2019 -> 2022 (before ChatGPT)",
+      "rows": 68029,
+      "decline_share": 0.45515882932278884,
+      "auc_without_ai": 0.7180441787700771,
+      "auc_with_ai": 0.7199473832729743,
+      "gain": 0.00190320450289716,
+      "ci_low": -0.0019729276825005302,
+      "ci_high": 0.005576497184659442
+    },
+    {
+      "period": "2022 -> 2025 (after ChatGPT)",
+      "rows": 78413,
+      "decline_share": 0.38193921926211216,
+      "auc_without_ai": 0.6860213231868005,
+      "auc_with_ai": 0.6861272380831059,
+      "gain": 0.00010591489630540352,
+      "ci_low": -0.003701240555002444,
+      "ci_high": 0.0036840141315409333
+    }
+  ],
+  "robustness": [
+    {
+      "check": "decline threshold +0%",
+      "positive_share": 0.4310254677158124,
+      "auc_without_ai": 0.6828723325852522,
+      "auc_with_ai": 0.6816179226128837,
+      "gain": -0.0012544099723684754,
+      "ci_low": -0.003971201302380475,
+      "ci_high": 0.001861348765504061
+    },
+    {
+      "check": "decline threshold -5%",
+      "positive_share": 0.38193921926211216,
+      "auc_without_ai": 0.6860213231868005,
+      "auc_with_ai": 0.6861272380831059,
+      "gain": 0.00010591489630540352,
+      "ci_low": -0.003701240555002444,
+      "ci_high": 0.0036840141315409333
+    },
+    {
+      "check": "decline threshold -10%",
+      "positive_share": 0.300141558159999,
+      "auc_without_ai": 0.6985094952263426,
+      "auc_with_ai": 0.698635529471933,
+      "gain": 0.00012603424559032295,
+      "ci_low": -0.003183055686573147,
+      "ci_high": 0.004316188867028056
+    },
+    {
+      "check": "only GPT-4 exposure (beta)",
+      "positive_share": 0.38193921926211216,
+      "auc_without_ai": 0.6860213231868005,
+      "auc_with_ai": 0.6859470732136346,
+      "gain": -7.424997316596293e-05,
+      "ci_low": -0.00244514572126914,
+      "ci_high": 0.0026105720248521007
+    },
+    {
+      "check": "only human-rated exposure (beta)",
+      "positive_share": 0.38193921926211216,
+      "auc_without_ai": 0.6860213231868005,
+      "auc_with_ai": 0.6845371143131064,
+      "gain": -0.0014842088736941594,
+      "ci_low": -0.0036509809013440114,
+      "ci_high": 0.0008024396684715299
+    },
+    {
+      "check": "employment-weighted AUC",
+      "positive_share": 0.38193921926211216,
+      "auc_without_ai": 0.6987709840927637,
+      "auc_with_ai": 0.6973793918531684,
+      "gain": -0.001391592239595285,
+      "ci_low": -0.009615857375211131,
+      "ci_high": 0.006143254366521316
+    },
+    {
+      "check": "without O*NET task features",
+      "positive_share": 0.38193921926211216,
+      "auc_without_ai": 0.6851176489274641,
+      "auc_with_ai": 0.6822029867964932,
+      "gain": -0.002914662130970913,
+      "ci_low": -0.007935151592704512,
+      "ci_high": 0.002551020990545759
+    }
+  ],
+  "out_of_time": [
+    {
+      "model": "logistic regression",
+      "auc_out_of_time": 0.6061715833611317,
+      "auc_in_period_cv": 0.6489887629042003,
+      "auc_out_of_time_test_occupations": 0.5793149529826791,
+      "mean_predicted": 0.4965110703159069,
+      "actual_share": 0.38193921926211216
+    },
+    {
+      "model": "LightGBM without AI",
+      "auc_out_of_time": 0.6396103650223207,
+      "auc_in_period_cv": 0.6860213231868005,
+      "auc_out_of_time_test_occupations": 0.6141473561757773,
+      "mean_predicted": 0.4873969339701765,
+      "actual_share": 0.38193921926211216
+    },
+    {
+      "model": "LightGBM with AI",
+      "auc_out_of_time": 0.6418830828436735,
+      "auc_in_period_cv": 0.6861272380831059,
+      "auc_out_of_time_test_occupations": 0.6158518141475627,
+      "mean_predicted": 0.4829814582802952,
+      "actual_share": 0.38193921926211216
+    }
+  ]
+}
